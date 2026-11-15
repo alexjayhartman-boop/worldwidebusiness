@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Worldwide Business of Business</title>
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -44,7 +44,7 @@ h1{font-family:var(--display);font-size:14px;font-weight:700;margin:0;letter-spa
 .group{display:flex;align-items:center;gap:8px}.group>span{color:var(--dim);font-family:var(--display);font-size:10px;letter-spacing:.1em}
 
 #stage{flex:1;min-height:0;position:relative;overflow:hidden}
-#c{position:absolute;inset:0;touch-action:none;cursor:pointer;display:block}
+#c{position:absolute;top:0;left:0;touch-action:none;cursor:pointer;display:block}
 #side{position:absolute;top:12px;left:12px;width:200px;display:flex;flex-direction:column}
 #side .in{display:flex;flex-direction:column;gap:8px;padding:10px}
 #side button{text-align:left;white-space:pre;font-size:10px;width:100%}
@@ -185,15 +185,47 @@ button.fire[data-arm="1"]{background:var(--down);color:var(--keyink)}
 button.fire:disabled{color:var(--dim);border-color:var(--line)}
 @media (prefers-reduced-motion:reduce){.toast,#feed .ev.fresh{animation:none}button:active{transform:none}}
 @media (max-width:720px){
-  #side{left:8px;right:8px;top:auto;bottom:8px;width:auto}#side .wbar,#side .hint,.zoom{display:none}#floors{flex-direction:row;flex-wrap:wrap}#floors button{width:auto}
-  #hud{left:8px;right:8px;top:8px;bottom:auto}#hud .in{grid-template-columns:1fr 1fr}#hud .in>div{border-left:0}
-  aside{top:8px;right:8px;left:8px;bottom:8px;width:auto;max-width:none;z-index:5}
-  #toasts{left:8px;right:8px;top:96px}
   #report-body{grid-template-columns:minmax(0,1fr)}#report-body section:first-child .sum.two{grid-template-columns:repeat(2,1fr)}
   .pbody{grid-template-columns:minmax(0,1fr);overflow:auto}#roster{border-right:0;border-bottom:1px solid var(--line2);max-height:38vh}
   .pcols{grid-template-columns:minmax(0,1fr)}.ptop{flex-direction:column}
   #help li{grid-template-columns:minmax(0,1fr);gap:2px}
 }
+/* ---------- phones: slim status strip on top, floor strip below, menu as a sheet ---------- */
+.sh{display:none}
+body.mob header{padding:6px 8px;gap:6px 8px}
+body.mob h1{font-size:12px;letter-spacing:.02em;flex:1 0 100%}
+body.mob #clock{flex:1 1 0;min-width:0;margin:0;font-size:11px;padding:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.mob header button{min-height:34px;padding:4px 10px}
+body.mob #hud{left:6px;right:6px;top:6px;bottom:auto}
+body.mob #hud .wbar,body.mob #hud .meter,body.mob #hud em,body.mob #side .wbar,body.mob #side .hint,body.mob .zoom{display:none}
+body.mob #hud .in{grid-template-columns:repeat(4,auto);justify-content:space-between}
+body.mob #hud .in>div{padding:5px 8px;min-width:0;gap:1px}
+body.mob #hud small{font-size:8px}body.mob #hud b{font-size:12px}
+body.mob #side{left:6px;right:6px;top:auto;bottom:calc(6px + env(safe-area-inset-bottom,0px));width:auto}
+body.mob #side .in{flex-direction:row;gap:5px;padding:6px;overflow-x:auto;scrollbar-width:none}
+body.mob #floors{flex-direction:row;gap:5px}
+body.mob #side button{width:auto;min-width:40px;min-height:38px;text-align:center;font-size:12px;flex:none;white-space:nowrap}
+body.mob .nm{display:none}body.mob .sh{display:inline}
+body.mob aside{left:0;right:0;top:auto;bottom:0;width:auto;max-width:none;height:56%;z-index:5;padding-bottom:env(safe-area-inset-bottom,0px)}
+body.mob:not(.closed):not(.land) #side{display:none}
+body.mob #toasts{left:6px;right:6px;top:52px}
+body.mob .tabs button,body.mob .seg button{min-height:38px}
+body.mob #feed,body.mob aside{font-size:14px}
+body.mob .over{padding:8px}
+/* phone held sideways */
+body.mob.land header{flex-wrap:nowrap;padding:4px 8px}
+body.mob.land h1{flex:none;white-space:nowrap}
+body.mob.land #clock{padding:5px 8px}
+body.mob.land #hud{right:auto}
+body.mob.land #hud .in{gap:6px}
+body.mob.land #side{left:6px;right:auto;top:50px;bottom:6px;width:auto}
+body.mob.land #side .in{flex-direction:column;overflow-y:auto;overflow-x:hidden;padding:5px}
+body.mob.land #floors{flex-direction:column}
+body.mob.land #side .in,body.mob.land #floors{gap:3px}
+body.mob.land #side button{min-height:26px;padding:1px 6px;box-shadow:none}
+body.mob.land aside{left:auto;right:0;top:0;bottom:0;height:auto;width:min(340px,46%)}
+body.mob.land #toasts{left:60px;right:calc(min(340px,46%) + 6px)}
+body.mob.land.closed #toasts{right:6px}
 </style>
 </head>
 <body>
@@ -201,7 +233,7 @@ button.fire:disabled{color:var(--dim);border-color:var(--line)}
   <h1>Worldwide Business of Business</h1>
   <span id="clock"></span>
   <button id="r-open" class="solo" hidden>Report</button>
-  <button id="help-open" class="solo" aria-haspopup="dialog">How it works</button>
+  <button id="help-open" class="solo" aria-haspopup="dialog" aria-label="How it works"><span class="nm">How it works</span><span class="sh">Help</span></button>
   <button id="menu" class="solo" aria-pressed="true">Hide menu</button>
 </header>
 <div id="stage">
@@ -209,10 +241,10 @@ button.fire:disabled{color:var(--dim);border-color:var(--line)}
   <nav id="side" class="win" aria-label="Floors">
     <div class="wbar"><span>FLOORS</span><i></i><i></i></div>
     <div class="in scan">
-    <button id="whole" type="button" aria-pressed="true">Whole building</button>
+    <button id="whole" type="button" aria-pressed="true" aria-label="Whole building"><span class="nm">Whole building</span><span class="sh">All</span></button>
     <div id="floors"></div>
     <div class="zoom"><button id="zout" type="button" aria-label="Zoom out">−</button><button id="zin" type="button" aria-label="Zoom in">+</button></div>
-    <p class="hint">Click a floor to zoom in and watch. Scroll to zoom, drag to move.</p>
+    <p class="hint">Click a floor to zoom in and watch. Scroll or pinch to zoom, drag to move.</p>
     </div>
   </nav>
   <div id="hud" class="win" aria-label="The firm at a glance">
@@ -1438,13 +1470,13 @@ function draw(){
 /* ================= camera ================= */
 W=2400;H=1500;OX=W/2-40;OY=H-300;
 const world=document.createElement('canvas'),wctx=world.getContext('2d'),V={x:0,y:0,w:100,h:100};
-const cam={x:OX+40,y:OY-300,z:1},aim={x:OX+40,y:OY-300,z:1};let mode='all',focus=-1,SW=100,SH=100,DPR=1,PANEL=0;
+const cam={x:OX+40,y:OY-300,z:1},aim={x:OX+40,y:OY-300,z:1};let STH=100,mode='all',focus=-1,SW=100,SH=100,DPR=1,PANEL=0,MOB=false,LAND=false,PADT=0,PADB=0,PADL=212;
 function layer(c){const x=Math.max(0,V.x),y=Math.max(0,V.y),w=Math.min(W,V.x+V.w)-x,h=Math.min(H,V.y+V.h)-y;if(w>0&&h>0)g.drawImage(c,x,y,w,h,x,y,w,h);}
 const minZoom=()=>Math.max(SW/W,SH/H);
 const crisp=z=>z>=1?Math.max(1,Math.round(z*DPR)/DPR):z;
-const shift=()=>(PANEL-(SW>720?212:0))/2/aim.z;                       // keep the building centred in the part of the screen the side menu leaves free
-function aimAll(){const top=OY-NF*FH-48,bot=OY+176;aim.z=Math.max(minZoom(),Math.min(.75*SH/(bot-top),.9*(SW-PANEL)/300));aim.x=OX+40+shift();aim.y=(top+bot)/2;mode='all';focus=-1;mark();}
-function aimFloor(f){f=Math.max(0,Math.min(NF-1,f));aim.z=crisp(Math.min(.82*SH/236,.92*(SW-PANEL)/300,6));aim.x=OX+40+shift();aim.y=OY-f*FH+18;mode='floor';focus=f;mark();}
+const shift=()=>(PANEL-PADL)/2/aim.z,vshift=()=>(PADB-PADT)/2/aim.z;                       // keep the building centred in the part of the screen the side menu leaves free
+function aimAll(){const top=OY-NF*FH-48,bot=OY+176;aim.z=Math.max(minZoom(),Math.min((MOB?.9:.75)*(SH-PADT-PADB)/(bot-top),.9*(SW-PANEL-(MOB?PADL:0))/300));aim.x=OX+40+shift();aim.y=(top+bot)/2+vshift();mode='all';focus=-1;mark();}
+function aimFloor(f){f=Math.max(0,Math.min(NF-1,f));aim.z=crisp(Math.min(.82*(SH-PADT-PADB)/236,(MOB?1.25:.92)*(SW-PANEL-(MOB?PADL:0))/300,6));aim.x=OX+40+shift();aim.y=OY-f*FH+18+vshift();mode='floor';focus=f;mark();}
 function clampAim(){aim.z=Math.max(minZoom(),Math.min(6,aim.z));const hw=SW/aim.z/2,hh=SH/aim.z/2;aim.x=Math.max(hw,Math.min(W-hw,aim.x));aim.y=Math.max(hh,Math.min(H-hh,aim.y));}
 function frame(){
   V.w=Math.ceil(SW/cam.z);V.h=Math.ceil(SH/cam.z);V.x=Math.round(cam.x-V.w/2);V.y=Math.round(cam.y-V.h/2);
@@ -1489,6 +1521,8 @@ const cls=v=>v>=0?'up':'down',pct=(v,n)=>(v<0?'−':'+')+Math.abs(v*100).toFixed
 const dateOf=d=>new Date(DATA.dates[Math.max(0,Math.min(d,ND-1))]+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
 function clockText(){
   if(S.done)return 'Caught up to '+dateOf(ND-1)+' · live prices come next';
+  if(MOB){if(EVE)return 'Day '+S.day+' \u00b7 '+dateOf(S.day-1).replace(/^\w+, /,'')+' \u00b7 after the close';const m=Math.floor(570+S.slot/SLOTS*390),h=Math.floor(m/60);
+    return 'Day '+(S.day+1)+' \u00b7 '+dateOf(S.day).replace(/^\w+, /,'')+' \u00b7 '+(h>12?h-12:h)+':'+String(m%60).padStart(2,'0')+(h>=12?' PM':' AM');}
   if(EVE)return 'Week '+(Math.floor((S.day-1)/5)+1)+' · Day '+S.day+' of '+ND+' · '+dateOf(S.day-1)+' · after the close';
   const m=Math.floor(570+S.slot/SLOTS*390),h=Math.floor(m/60);
   return 'Week '+(Math.floor(S.day/5)+1)+' · Day '+(S.day+1)+' of '+ND+' · '+dateOf(S.day)+' · '+(h>12?h-12:h)+':'+String(m%60).padStart(2,'0')+(h>=12?' PM':' AM')+' ET';
@@ -1628,7 +1662,12 @@ const TABS=['feed','daily','people','nums'];
 function setTab(t){tab=t;feedKey='';for(const k of TABS){$('t-'+k).setAttribute('aria-selected',String(k===t));$('p-'+k).hidden=k!==t;}dirty=true;}
 for(const k of TABS)$('t-'+k).onclick=()=>setTab(k);
 $('undo').onclick=()=>{FIRES.length=0;saveFires();const t=simNow();newSim();VIS=false;advance(t);VIS=true;syncAgents(true);setHeight();dirty=true;};
-function setPanel(open){document.body.classList.toggle('closed',!open);$('menu').setAttribute('aria-pressed',String(open));$('menu').textContent=open?'Hide menu':'Show menu';PANEL=open?(SW>720?380:1):0;if(mode==='all')aimAll();else if(mode==='floor')aimFloor(focus);dirty=true;}
+function setPanel(open){document.body.classList.toggle('closed',!open);$('menu').setAttribute('aria-pressed',String(open));$('menu').textContent=MOB?(open?'Close':'Menu'):(open?'Hide menu':'Show menu');
+  if(!MOB){PANEL=open?380:0;PADT=PADB=0;PADL=212;}
+  else if(LAND){PANEL=open?Math.min(340,SW*.46)+6:0;PADT=44;PADB=0;PADL=56;}
+  else{PANEL=open?1:0;PADT=44;PADB=open?0:52;PADL=0;}
+  sizeCanvas(MOB&&!LAND&&open?STH-Math.round(STH*.56):STH);
+  if(mode==='all')aimAll();else if(mode==='floor')aimFloor(focus);dirty=true;}
 $('menu').onclick=()=>setPanel(document.body.classList.contains('closed'));
 
 /* ================= final report ================= */
@@ -1685,18 +1724,25 @@ $('r-open').onclick=()=>{if(S.done)$('report').hidden=false;};
 /* ================= controls ================= */
 const list=$('floors');
 function mark(){for(const b of list.querySelectorAll('button'))b.setAttribute('aria-pressed',String(+b.dataset.f===focus));$('whole').setAttribute('aria-pressed',String(mode==='all'));}
-function buildList(){list.textContent='';lineup(NF).map((F,f)=>({F,f})).reverse().forEach(({F,f})=>{const b=el('button','',(f+1)+'  '+F.name);b.type='button';b.dataset.f=f;b.onclick=()=>aimFloor(f);list.appendChild(b);});mark();}
+function buildList(){list.textContent='';lineup(NF).map((F,f)=>({F,f})).reverse().forEach(({F,f})=>{const b=el('button','',String(f+1));b.appendChild(el('span','nm','  '+F.name));b.type='button';b.setAttribute('aria-label','Floor '+(f+1)+', '+F.name);b.dataset.f=f;b.onclick=()=>aimFloor(f);list.appendChild(b);});mark();}
 $('whole').onclick=aimAll;
 $('zin').onclick=()=>{aim.z*=1.4;mode='free';focus=-1;mark();};$('zout').onclick=()=>{aim.z/=1.4;mode='free';focus=-1;mark();};
 const toWorld=(px,py)=>[cam.x+(px-SW/2)/cam.z,cam.y+(py-SH/2)/cam.z];let drag=null;
-cv.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,ax:aim.x,ay:aim.y,moved:false};cv.setPointerCapture(e.pointerId);});
-cv.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<5)return;
+const PTS=new Map();let pinch=null;
+const pinchState=()=>{const [a,b]=[...PTS.values()],r=cv.getBoundingClientRect();return {d:Math.max(1,Math.hypot(a.x-b.x,a.y-b.y)),px:(a.x+b.x)/2-r.left,py:(a.y+b.y)/2-r.top};};
+cv.addEventListener('pointerdown',e=>{PTS.set(e.pointerId,{x:e.clientX,y:e.clientY});try{cv.setPointerCapture(e.pointerId);}catch(_){}
+  if(PTS.size===2){const p=pinchState();pinch={d:p.d,z:cam.z,w:toWorld(p.px,p.py)};if(drag)drag.moved=true;return;}
+  drag={x:e.clientX,y:e.clientY,ax:aim.x,ay:aim.y,moved:false};});
+cv.addEventListener('pointermove',e=>{if(!PTS.has(e.pointerId))return;PTS.set(e.pointerId,{x:e.clientX,y:e.clientY});if(!pinch||PTS.size<2)return;
+  const p=pinchState(),z=Math.max(minZoom(),Math.min(6,pinch.z*p.d/pinch.d));aim.z=cam.z=z;aim.x=cam.x=pinch.w[0]-(p.px-SW/2)/z;aim.y=cam.y=pinch.w[1]-(p.py-SH/2)/z;mode='free';focus=-1;mark();dirty=true;});
+const liftPt=e=>{PTS.delete(e.pointerId);if(pinch&&PTS.size<2){pinch=null;const r=[...PTS.values()][0];drag=r?{x:r.x,y:r.y,ax:aim.x,ay:aim.y,moved:true}:null;return true;}return false;};
+cv.addEventListener('pointermove',e=>{if(!drag||pinch)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(!drag.moved&&Math.hypot(dx,dy)<5)return;
   drag.moved=true;aim.x=drag.ax-dx/cam.z;aim.y=drag.ay-dy/cam.z;cam.x=aim.x;cam.y=aim.y;mode='free';focus=-1;mark();cv.style.cursor='grabbing';});
-cv.addEventListener('pointerup',e=>{cv.style.cursor='';if(!drag)return;const d=drag;drag=null;if(d.moved)return;
+cv.addEventListener('pointerup',e=>{cv.style.cursor='';if(liftPt(e)||!drag)return;const d=drag;drag=null;if(d.moved)return;
   const r=cv.getBoundingClientRect(),w=toWorld(e.clientX-r.left,e.clientY-r.top);
   if(Math.abs(w[0]-(OX+40))<150&&w[1]>OY-NF*FH-90&&w[1]<OY+124){const f=Math.max(0,Math.min(NF-1,Math.floor((OY+120-w[1])/FH)));if(mode==='floor'&&f===focus)aimAll();else aimFloor(f);}
   else if(mode!=='all')aimAll();});
-cv.addEventListener('pointercancel',()=>{drag=null;cv.style.cursor='';});
+cv.addEventListener('pointercancel',e=>{liftPt(e);drag=null;cv.style.cursor='';});
 cv.addEventListener('wheel',e=>{e.preventDefault();const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top,w=toWorld(px,py),z=Math.max(minZoom(),Math.min(6,aim.z*Math.exp(-e.deltaY*.0016)));
   aim.z=z;aim.x=w[0]-(px-SW/2)/z;aim.y=w[1]-(py-SH/2)/z;mode='free';focus=-1;mark();},{passive:false});
 addEventListener('keydown',e=>{if(e.key==='Escape'){if(!$('intro').hidden)seenIntro();else if(!$('gate').hidden)$('gate-x').click();else if(!$('admin').hidden)$('admin').hidden=true;else if(!$('help').hidden)$('help').hidden=true;else if(profOpen)$('prof-close').onclick();else if(!$('report').hidden)$('report').hidden=true;else if(!$('who-menu').hidden)$('who-menu').hidden=true;else aimAll();}});
@@ -1717,14 +1763,16 @@ function autoLight(){
   if(speed!=='live'&&speed!=='m1')return;             // at the fast preview speeds the light holds still
   const fr=simT%1;setLight(fr>=SESS-.07||fr<.012);
 }
-function fit(){const st=$('stage');SW=st.clientWidth;SH=st.clientHeight;DPR=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(SW*DPR);cv.height=Math.round(SH*DPR);cv.style.width=SW+'px';cv.style.height=SH+'px';
+function sizeCanvas(h){if(h===SH&&cv.width===Math.round(SW*DPR)&&cv.height===Math.round(SH*DPR))return;SH=h;cv.width=Math.round(SW*DPR);cv.height=Math.round(SH*DPR);cv.style.width=SW+'px';cv.style.height=SH+'px';dirty=true;}
+function fit(){const st=$('stage');SW=st.clientWidth;STH=st.clientHeight;DPR=Math.min(2,window.devicePixelRatio||1);
+  LAND=SH<=480&&SW>SH;MOB=SW<=720||LAND;document.body.classList.toggle('mob',MOB);document.body.classList.toggle('land',LAND);
   setPanel(!document.body.classList.contains('closed'));}
 let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(fit,120);});
 for(const c of[bg,curb,fg,east]){c.width=W;c.height=H;}
 (async()=>{
   try{PX=await unpack(DATA.px);SPYD=await unpack(DATA.spy);}catch(e){$('clock').textContent='This browser could not unpack the price data. Try a current version of Chrome, Safari, Firefox or Edge.';return;}
   newSim();rebuildCity();VIS=false;simT=liveT();advance(Math.floor(simT)+Math.min(1,(simT%1)/SESS));VIS=true;NF=height();PENT=S.pent;syncAgents(true);buildList();
-  if($('stage').clientWidth<=720)document.body.classList.add('closed');fit();cam.x=aim.x;cam.y=aim.y;cam.z=aim.z;setSpeed('live');
+  {const st=$('stage');if(st.clientWidth<=720||(st.clientHeight<=480&&st.clientWidth>st.clientHeight))document.body.classList.add('closed');}fit();if(MOB)fit();cam.x=aim.x;cam.y=aim.y;cam.z=aim.z;setSpeed('live');
   let seen=false;try{seen=localStorage.getItem('wbb-seen')==='1';}catch(e){}
   if(!seen&&location.hash!=='#admin')$('intro').hidden=false;
   openAdmin();
