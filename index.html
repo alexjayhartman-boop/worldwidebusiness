@@ -151,6 +151,8 @@ body.closed #callouts{right:12px}
 .vbtns{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}.vbtns button{flex:1 1 0;min-height:36px;min-width:0}
 .vbtns button.no[aria-pressed="false"]{color:var(--ink)}.vbtns button.yes[aria-pressed="false"]{color:var(--down);border-color:var(--down)}
 .vbtns button.yes[aria-pressed="true"]{background:var(--down);border-color:var(--down);box-shadow:0 2px 0 #a04a3c}
+.vbtns button.yes.good[aria-pressed="false"]{color:var(--up);border-color:var(--up)}.vbtns button.yes.good[aria-pressed="true"]{background:var(--up);border-color:var(--up);box-shadow:0 2px 0 #3d9a5e}
+button.promo{color:var(--up);border-color:var(--up)}button.promo[data-arm="1"]{background:var(--up);color:var(--keyink)}button.promo:disabled{color:var(--dim);border-color:var(--line)}
 .vtime{grid-column:1/-1;height:4px;background:var(--panel);border:1px solid var(--line2)}.vtime i{display:block;height:100%;background:var(--accent)}
 .vote.done .wbar{background:var(--gold)}.vres{grid-column:1/-1;font-size:12px;color:var(--ink)}
 .toast{display:flex;gap:10px;align-items:center;max-width:470px;background:var(--scr);border:1px solid var(--accent);box-shadow:0 0 0 1px #000,5px 5px 0 rgba(0,0,0,.5);padding:8px 12px;font-size:12px;line-height:1.4;animation:pop .25s ease-out}
@@ -367,7 +369,7 @@ body.mob.land.closed #callouts{right:6px}
       <h2>Latest trades</h2>
       <ol id="trades" class="mini"></ol>
       <button id="undo" class="solo" hidden>Undo my firings</button>
-      <p class="note">Stock moves are real S&amp;P 500 prices, replayed from January 2001. The firm, its people and their dollar figures are fiction. A 10% day adds a hire; a 10% losing day costs the worst earner their job; each floor seats 10.</p>
+      <p class="note">Stock moves are real S&amp;P 500 prices, replayed from January 2001. The firm, its people and their dollar figures are fiction. A 10% day adds a hire. Nobody is fired or promoted unless visitors vote for it. Each floor seats 10.</p>
     </section>
     </div>
   </aside>
@@ -434,7 +436,7 @@ body.mob.land.closed #callouts{right:6px}
       <div class="htabs" role="tablist" aria-label="How it works">
         <button role="tab" id="ht-0" aria-controls="hp-0" aria-selected="true">The basics</button>
         <button role="tab" id="ht-1" aria-controls="hp-1" aria-selected="false" tabindex="-1">Trading</button>
-        <button role="tab" id="ht-2" aria-controls="hp-2" aria-selected="false" tabindex="-1">Hiring and layoffs</button>
+        <button role="tab" id="ht-2" aria-controls="hp-2" aria-selected="false" tabindex="-1">Hiring and firing</button>
         <button role="tab" id="ht-3" aria-controls="hp-3" aria-selected="false" tabindex="-1">Promotions</button>
         <button role="tab" id="ht-4" aria-controls="hp-4" aria-selected="false" tabindex="-1">Voting</button>
         <button role="tab" id="ht-5" aria-controls="hp-5" aria-selected="false" tabindex="-1">Clock and data</button>
@@ -453,7 +455,7 @@ body.mob.land.closed #callouts{right:6px}
           <li>Every trade uses a <b>real S&amp;P 500 stock's real price move</b> from that day.</li>
           <li>Good days add people and floors. Bad days cost people their jobs.</li>
           <li>The tower can reach 8 floors. Nothing guarantees it gets there.</li>
-          <li>You can vote on who gets fired and who gets promoted.</li>
+          <li>Nobody is fired or promoted unless visitors vote for it. That part is up to you.</li>
           <li>The people and their dollar figures are fiction. The prices are real.</li>
         </ul>
         <h3>Getting around</h3>
@@ -473,7 +475,7 @@ body.mob.land.closed #callouts{right:6px}
           <div><b>25% to 90%</b><small>of their book on one trade</small></div>
           <div><b>15 min to 2 hr</b><small>how long a trade is held</small></div>
         </div>
-        <p class="formula">result <em>=</em> position size <em>×</em> the stock's real move <em>×</em> risk multiplier <em>×</em> firm leverage (3x)</p>
+        <p class="formula">result <em>=</em> position size <em>×</em> the stock's real move <em>×</em> risk multiplier <em>×</em> firm leverage</p>
         <ul>
           <li><b>Picking stocks:</b> a mix of big names everyone trades and each person's own watchlist. Aggressive traders go for the volatile ones.</li>
           <li><b>Buy or short:</b> each trader has a style. Some ride momentum, some bet against the crowd, some follow yesterday's numbers, some trade on hunches, some just buy and believe.</li>
@@ -486,43 +488,44 @@ body.mob.land.closed #callouts{right:6px}
       </section>
 
       <section class="hpanel scan" id="hp-2" role="tabpanel" aria-labelledby="ht-2" hidden>
-        <h2>How the firm grows and shrinks</h2>
-        <p class="lead">One number decides it: the day's earnings as a share of the firm's capital, checked at every close.</p>
+        <h2>How the firm grows, and why it stalls</h2>
+        <p class="lead">Hiring is automatic. Firing is not: nobody leaves unless visitors vote them out.</p>
         <div class="tiles">
           <div><b class="up">+10% day</b><small>one new hire</small></div>
-          <div><b class="down">−10% day</b><small>one layoff</small></div>
+          <div><b class="down">0</b><small>automatic firings, ever</small></div>
           <div><b>10</b><small>desks on each floor</small></div>
         </div>
         <ul>
-          <li><b class="up">Up 10% or more:</b> one person is hired at the close.</li>
-          <li><b class="down">Down 10% or more:</b> that day's worst earner is laid off.</li>
-          <li><b>Anything in between:</b> nobody comes or goes, and Walt writes an unhappy summary.</li>
-          <li><b>The penthouse:</b> when the first floor is full, Walt builds himself an office on top and moves up.</li>
-          <li><b>New floors</b> open under the penthouse as the ones below fill: 7 working floors plus his.</li>
+          <li><b class="up">Up 10% or more:</b> one person is hired at the close. The day's earnings are measured against the firm's capital.</li>
+          <li><b>Some people are just bad at this.</b> Everyone has a hidden level of skill. Good traders keep more of their wins and lose less; poor ones do the opposite, day after day.</li>
+          <li><b class="down">Poor performers drag the whole firm down.</b> Their losses come straight off the day's result, so 10% days get rarer and hiring stalls.</li>
+          <li><b>Walt will not fire them.</b> Only a vote by visitors can. Look for people deep in the red on the People tab.</li>
+          <li><b>A fired person is replaced</b> on the spot by someone new, who might be better or worse.</li>
+          <li><b>The penthouse:</b> when the first floor is full, Walt builds himself an office on top and moves up. New floors open under it as the ones below fill.</li>
           <li><b>Capital</b> means everyone's starting book added together, so each hire raises the bar for the next 10% day.</li>
-          <li>Walt cannot be laid off or fired. It is his name on the lease.</li>
         </ul>
       </section>
 
       <section class="hpanel scan" id="hp-3" role="tabpanel" aria-labelledby="ht-3" hidden>
-        <h2>Who becomes a manager, and who stops being one</h2>
-        <p class="lead">Every 10 trading days the best earner is promoted. Keeping the job is harder than getting it.</p>
+        <h2>Managers are chosen by you</h2>
+        <p class="lead">Nobody is promoted automatically. A promotion only happens when visitors vote for it.</p>
         <div class="tiles">
-          <div><b>10 days</b><small>between promotion checks</small></div>
+          <div><b>By vote</b><small>the only way up</small></div>
           <div><b>2x</b><small>the trades once promoted</small></div>
-          <div><b>1</b><small>manager per floor</small></div>
+          <div><b class="down">−50% day</b><small>costs a manager the title</small></div>
         </div>
         <h3>Getting promoted</h3>
         <ul>
-          <li><b>Who:</b> the best earner of the last 10 trading days, if they finished in profit and have been at the firm at least that long.</li>
+          <li><b>How:</b> open a profile from the People tab and press <b>Call a vote to promote</b>.</li>
           <li><b>The move:</b> up one floor. If that floor is full they swap desks with its weakest earner. On the top floor they stay put.</li>
           <li><b>The team:</b> the three newest people from the floor they left.</li>
-          <li><b>The catch:</b> twice the trades means a bad stretch is twice as bad.</li>
+          <li><b>One manager per floor.</b> If the floor they would move to already has one, the button is greyed out.</li>
+          <li><b>Choose well:</b> a manager makes twice the trades. A good trader earns twice as much, and a poor one loses twice as much.</li>
         </ul>
         <h3>Losing the job</h3>
         <ul>
-          <li><b>Takeover:</b> if a manager loses money over 10 days while someone on their team makes money, that person takes the title and the desk.</li>
-          <li><b>Losing month:</b> a manager who is down over 20 trading days is demoted, and the team reports to Walt again.</li>
+          <li><b>A disastrous day:</b> a manager who loses half their book in a single day is demoted at the close, and the team reports to Walt again.</li>
+          <li><b>Voted out:</b> if a manager is fired, the best earner on their team takes over the title and the desk, and a new hire fills the gap.</li>
           <li>See who reports to whom under <b>People, then Org chart</b>.</li>
         </ul>
       </section>
@@ -533,20 +536,21 @@ body.mob.land.closed #callouts{right:6px}
         <div class="tiles">
           <div><b>2 minutes</b><small>to vote once one opens</small></div>
           <div><b>Majority</b><small>wins, even at 1 to 0</small></div>
-          <div><b>1</b><small>firing vote at a time</small></div>
+          <div><b>1</b><small>vote at a time</small></div>
         </div>
-        <h3>Firing someone</h3>
+        <h3>Calling a vote</h3>
         <ul>
-          <li>Open a profile from the <b>People</b> tab and press <b>Call a vote to fire</b>.</li>
+          <li>Open a profile from the <b>People</b> tab. Press <b>Call a vote to fire</b> or <b>Call a vote to promote</b>.</li>
           <li>Everyone watching gets a popup with a two-minute timer. At the normal pace that is less than half a trading day.</li>
-          <li><b>More votes to fire than to keep:</b> they are out. <b>A tie:</b> they stay.</li>
-          <li><b>Nobody votes:</b> the firing goes ahead.</li>
-          <li>A replacement is hired on the spot. The next vote can start 30 seconds later.</li>
+          <li><b>More votes for than against:</b> it happens. <b>A tie:</b> nothing changes.</li>
+          <li><b>Nobody votes:</b> it goes ahead, since the person who called it counts as a yes.</li>
+          <li>The next vote can start 30 seconds after one closes.</li>
         </ul>
-        <h3>Choosing a manager</h3>
+        <h3>What a vote does</h3>
         <ul>
-          <li>Two minutes before every tenth close, a vote opens between the <b>top three earners</b>.</li>
-          <li>Most votes wins. A tie, or no votes, leaves it to the usual rule.</li>
+          <li><b>Fired:</b> they clear their desk within the quarter hour and a replacement is hired.</li>
+          <li><b>Promoted:</b> they become a manager within the quarter hour.</li>
+          <li>Walt cannot be fired or promoted. It is his name on the lease.</li>
         </ul>
       </section>
 
@@ -1423,7 +1427,8 @@ function profile(i){
 }
 
 /* ================= the simulation: every number comes from the price data, in a fixed order ================= */
-let KS=3,LAY=.1;const SLOTS=26,TARGET=.10,CAPF=10,WORKF=7;
+/* SK: how much a person's hidden skill tilts each trade. Good traders keep more of their wins and lose less; poor ones the reverse */
+let KS=1,LAY=.1,SK=.25;const SLOTS=26,TARGET=.10,CAPF=10,WORKF=7;
 let S,VIS=false;
 /* shared database (Supabase). Leave both blank and the game runs on its own, with firings kept in each visitor's browser. */
 const DB={url:'https://tmggljbcjmkgcoeczfwk.supabase.co',key:'sb_publishable_DC9hGJHjsKxoIU3taFwwiA_f742hg-k'};
@@ -1439,7 +1444,7 @@ function newSim(){
 function join(fl,seat){
   const n=S.next++,who=profile(n===0?0:n<6?n+1:n===6?1:n),p={uid:S.uid++,who,name:who.name,role:who.role,att:who.att,bio:who.bio,look:who.look,boss:!!who.boss,
     ag:who.tr[0],book0:who.tr[1],social:who.tr[2],drive:who.tr[3],resil:who.tr[4],style:STYLE_OF[who.src||who.name]||'long',
-    fl,seat,lv:1,xp:0,trades:0,wins:0,n:0,last:[],earn:0,dayEarn:0,morale:55+Math.floor(hash(S.uid,3)*25),feel:'Settling in',ps:[],since:S.day,rank:who.boss?'boss':'emp',mgr:null,mgrSince:-1,h:[]};
+    fl,seat,lv:1,xp:0,trades:0,wins:0,n:0,last:[],earn:0,dayEarn:0,morale:55+Math.floor(hash(S.uid,3)*25),feel:'Settling in',ps:[],since:S.day,rank:who.boss?'boss':'emp',mgr:null,mgrSince:-1,h:[],skill:who.boss?.3:hash(S.uid*13+5,31)*2-1};
   S.staff.push(p);return p;
 }
 const capital=()=>S.staff.reduce((a,p)=>a+p.book0,0);
@@ -1455,7 +1460,7 @@ function freeSeat(){
   for(let s=1;s<CAPF;s++)if(!used.has(700+s))return[7,s];
   return null;
 }
-function hireOne(){const s=freeSeat();if(!s)return null;const p=join(s[0],s[1]);S.firm.hires++;S.today.hired.push(p.name);if(VIS)visHire(p);feedEv({k:'hire',uid:p.uid,name:p.name,look:p.look,text:p.name+' joins as '+p.role.toLowerCase()+'. '+p.att+'. '+S.staff.length+' on staff.'});return p;}
+function hireOne(at){const s=at||freeSeat();if(!s)return null;const p=join(s[0],s[1]);S.firm.hires++;S.today.hired.push(p.name);if(VIS)visHire(p);feedEv({k:'hire',uid:p.uid,name:p.name,look:p.look,text:p.name+' joins as '+p.role.toLowerCase()+'. '+p.att+'. '+S.staff.length+' on staff.'});return p;}
 function removeStaff(p,why,note){S.staff.splice(S.staff.indexOf(p),1);if(p.rank==='mgr')for(const q of S.staff)if(q.mgr===p.uid)q.mgr=null;S.gone.push({name:p.name,earn:p.earn,why,day:S.day});S.today.left.push(p.name);if(VIS)visLeave(p);feedEv({k:why==='fired'?'fire':'layoff',uid:p.uid,name:p.name,look:p.look,text:p.name+', '+p.role.toLowerCase()+', '+(why==='fired'?(note||'was fired by a visitor'):'was laid off'+(note||''))+'. Left with '+signed(p.earn)+' in earnings.'});}
 function feedEv(ev){ev.d=S.day;S.feed.push(ev);if(S.feed.length>600){const i=S.feed.findIndex(e=>e.k==='say');S.feed.splice(i<0?0:i,1);}if(VIS&&ev.k!=='say')toast(ev);dirty=true;return ev;}
 function logLine(p,f,t){feedEv({k:'say',uid:p.uid,name:p.name,look:p.look,feel:f,text:t});}
@@ -1471,7 +1476,7 @@ function stepDesk(p,d,sl,k){
 }
 function closeTrade(p,d,sl,k){
   const o=p.ps[k],mv=path(o.t,d,(sl+1)/SLOTS)-path(o.t,d,o.in),lvl=1+Math.min(p.lv-1,8)*.08;p.ps[k]=null;
-  const pnl=Math.round(o.size*o.lev*mv*o.dir*KS*lvl/10)*10,vol=o.size*o.fills,F=S.firm,good=pnl>=0;
+  const raw=o.size*o.lev*mv*o.dir*KS*lvl,pnl=Math.round(raw*(1+(raw>=0?SK:-SK)*p.skill)/10)*10,vol=o.size*o.fills,F=S.firm,good=pnl>=0;
   p.trades+=o.fills;p.n++;p.earn+=pnl;p.dayEarn+=pnl;if(good)p.wins++;
   F.dayEarn+=pnl;F.ytd+=pnl;F.dayTrades+=o.fills;F.ytdTrades+=o.fills;F.dayVol+=vol;F.ytdVol+=vol;
   S.st.n[o.t]+=o.fills;S.st.usd[o.t]+=vol;S.st.pnl[o.t]+=pnl;
@@ -1485,7 +1490,7 @@ function closeTrade(p,d,sl,k){
 }
 const pcs=r=>(r<0?'down ':'up ')+Math.abs(r*100).toFixed(1)+'%';
 const QUOTES={hit:['Ten percent. That buys one desk. I want ten more days like it.','That is what a day is supposed to look like. Again tomorrow.','A new desk, earned. Do not let it go to your heads.'],
-  full:['Every desk is full. I need a taller building.'],bad:['Unacceptable. Someone paid for it.','That much of the book, gone in a day. Never again.'],
+  full:['Every desk is full. I need a taller building.'],bad:['Unacceptable. Somebody out there, fire someone.','That much of the book, gone in a day. Who is dragging us down?','I cannot fire them myself, apparently. Somebody vote.'],
   up:['Short of ten. No new desk.','Green, but not green enough.','A profit. A small one. Do not get comfortable.','We made money. I wanted more of it.'],
   down:['Red. Somebody explain.','We gave money back today. I hate giving money back.','Tomorrow we take it back. All of it.','I did not build this to lose.']};
 function endDay(){ // the close: hire on a 10% day, cut someone on a big loss, and Walt writes the day up
@@ -1496,15 +1501,17 @@ function endDay(){ // the close: hire on a 10% day, cut someone on a big loss, a
   const desks=S.staff.slice().sort((a,b)=>b.dayEarn-a.dayEarn),best=desks[0],worst=desks.length>1?desks[desks.length-1]:null;
   const sum={d,r,e,best:{name:first(best),e:best.dayEarn},worst:worst?{name:first(worst),e:worst.dayEarn}:null,trade:F.dayBest&&F.dayBest.pnl>0?F.dayBest:null};
   if(r>=TARGET){F.hit++;const n=hireOne();kind=n?'hit':'full';word=n?'HIRED':'MORE DESKS';}
-  else if(r<=-LAY){const w=S.staff.filter(p=>!p.boss).sort((a,b)=>a.dayEarn-b.dayEarn)[0];if(w){removeStaff(w,'laid off',' after the firm lost '+Math.abs(r*100).toFixed(0)+'% in a day');F.laid++;}kind='bad';word='OUT!';}
+  else if(r<=-LAY){kind='bad';word='WHO?!';}   // a terrible day: nobody is let go automatically, that is up to the visitors
   else{kind=e>=0?'up':'down';word=e>=0?'NOT 10%':'WHO?!';}
-  careers();
+  for(const m of S.staff.filter(p=>p.rank==='mgr'&&p.dayEarn<=-.5*p.book0)){   // a manager who loses half their book in one day is demoted on the spot
+    const team=teamOf(m);for(const q of team)q.mgr=null;setRank(m,'emp');
+    careerEv('demo',m,m.name+' is demoted after losing '+Math.round(-m.dayEarn/m.book0*100)+'% of their book in one day, '+signed(m.dayEarn)+'.'+(team.length?' The team of '+team.length+' reports to '+first(S.staff[0])+' again.':''));}
   const Q=QUOTES[kind];sum.quote=Q[Math.floor(hash(d,77)*Q.length)];sum.hired=S.today.hired;sum.left=S.today.left;sum.staff=S.staff.length;sum.floors=height();
   S.sums.push(sum);feedEv({k:'sum',sum});boss.feel=kind==='hit'?'Greedy':kind==='up'?'Unsatisfied':'Furious';if(VIS)visSay(boss,[word]);
   F.dayEarn=F.dayTrades=F.dayVol=0;F.dayBest=F.dayWorst=null;S.today={hired:[],left:[]};for(const p of S.staff){p.dayEarn=0;p.ps=[];}
   S.day++;S.slot=0;if(S.day>=ND)S.done=true;
 }
-/* careers: every 10 trading days the best earner is promoted, a team member who out-earns their manager takes the job, and a losing month costs a manager the title */
+/* careers: every 10 trading days the best earner is promoted. A manager who loses half their book in a single day is demoted (see endDay). Nobody is let go automatically. */
 const earned=(p,n)=>p.h.slice(-n).reduce((a,b)=>a+b,0),tenure=p=>S.day-p.since+1,teamOf=m=>S.staff.filter(q=>q.mgr===m.uid);
 const flNo=p=>(p.fl===7?height():p.fl+1);
 function setRank(p,r){p.rank=r;p.mgrSince=r==='mgr'?S.day:-1;}
@@ -1513,33 +1520,32 @@ function careerEv(k,p,text){if(k==='promo')S.firm.promos++;else S.firm.demos++;i
 const isTop=p=>p.fl===7||p.fl>=S.open-1,dest=p=>isTop(p)?p.fl:p.fl+1,pool=fl=>S.staff.filter(q=>q.fl===fl&&q.rank==='emp'&&q.mgr===null);
 function eligible(e10){const taken=new Set(S.staff.filter(p=>p.rank==='mgr').map(p=>p.fl));
   return S.staff.filter(p=>p.rank==='emp'&&tenure(p)>=10&&e10(p)>0&&!taken.has(dest(p))&&pool(p.fl).length>=4).sort((a,b)=>e10(b)-e10(a)||a.uid-b.uid);}
-function careers(){
-  const n=S.day+1;if(n%10)return;
-  const ok=p=>tenure(p)>=10,e10=p=>earned(p,10);
-  if(n%20===0)for(const m of S.staff.filter(p=>p.rank==='mgr'&&S.day-p.mgrSince>=19&&earned(p,20)<0)){
-    const team=teamOf(m);for(const q of team)q.mgr=null;setRank(m,'emp');
-    careerEv('demo',m,m.name+' is demoted after a losing month, '+signed(earned(m,20))+' over 20 days.'+(team.length?' The team of '+team.length+' reports to '+first(S.staff[0])+' again.':''));}
-  for(const m of S.staff.filter(p=>p.rank==='mgr')){
-    const t=teamOf(m).filter(ok).sort((a,b)=>e10(b)-e10(a)||a.uid-b.uid)[0];if(!t||e10(m)>=0||e10(t)<=0)continue;   // a manager keeps the job unless they lost money while someone on the team made money
-    const team=teamOf(m);swapDesks(t,m);setRank(t,'mgr');setRank(m,'emp');for(const q of team)q.mgr=t.uid;t.mgr=null;m.mgr=t.uid;
-    careerEv('promo',t,t.name+' made '+signed(e10(t))+' over 10 days while manager '+m.name+' lost '+signed(e10(m)).replace(/^[^$]*/,'')+', and takes the job on floor '+flNo(t)+'.');
-    careerEv('demo',m,m.name+' is demoted and now reports to '+t.name+', who used to be on the team.');}
-  const cands=eligible(e10);let c=cands[0],voted=false;
-  if(PROMO[S.day]!==undefined){const q=cands.find(p=>p.uid===PROMO[S.day]);if(q){voted=true;c=q;}}
-  if(!c)return;
-  const from=c.fl,to=dest(c);let note=' and stays on floor '+flNo(c);
+function promote(c,ev){ // only ever called for a promotion that visitors voted through
+  if(c.rank!=='emp'||S.staff.some(q=>q.rank==='mgr'&&q.fl===dest(c)))return false;
+  const from=c.fl,to=dest(c),e10=p=>earned(p,10);let note=' and stays on floor '+flNo(c);
   if(to!==from){const used=new Set(S.staff.filter(q=>q.fl===to).map(q=>q.seat));let st=-1;for(let i=0;i<CAPF;i++)if(!used.has(i)){st=i;break;}
     if(st>=0){c.fl=to;c.seat=st;note=' and moves up to floor '+flNo(c);}
     else{const w=S.staff.filter(q=>q.fl===to&&q.rank==='emp').sort((a,b)=>e10(a)-e10(b)||b.uid-a.uid)[0];
       if(w){swapDesks(c,w);if(VIS)visMove(w,'move');note=' and moves up to floor '+flNo(c)+', swapping desks with '+w.name;}}}
   setRank(c,'mgr');c.mgr=null;
   const team=pool(from).filter(q=>q!==c).sort((a,b)=>b.since-a.since||b.uid-a.uid).slice(0,3);for(const q of team)q.mgr=c.uid;
-  careerEv('promo',c,c.name+' is promoted to manager'+note+'. '+(voted?'Chosen by visitor vote, with '+signed(e10(c))+' over the last 10 days.':'Best earner of the last 10 days at '+signed(e10(c))+'.')+' Now trades twice as often and leads '+team.map(first).join(', ').replace(/, ([^,]*)$/,' and $1')+'.');
+  careerEv('promo',c,c.name+' is promoted to manager by visitor vote'+(ev&&ev.yes!==undefined&&ev.yes+ev.no?', '+ev.yes+' to '+ev.no+',':'')+note+'. Now trades twice as often'+(team.length?' and leads '+team.map(first).join(', ').replace(/, ([^,]*)$/,' and $1'):'')+'.');
+  return true;
+}
+function fireOne(p,ev){
+  const note=ev.yes===undefined?'':ev.yes+ev.no===0?'was fired after a vote nobody turned up for':'was voted out by visitors, '+ev.yes+' to '+ev.no,team=p.rank==='mgr'?teamOf(p):[],desk=[p.fl,p.seat];
+  const heir=team.slice().sort((a,b)=>earned(b,10)-earned(a,10)||b.earn-a.earn||a.uid-b.uid)[0];
+  removeStaff(p,'fired',note);S.firm.fired++;
+  if(heir){const old=[heir.fl,heir.seat];heir.fl=desk[0];heir.seat=desk[1];setRank(heir,'mgr');heir.mgr=null;for(const q of team)if(q!==heir)q.mgr=heir.uid;   // the best of the team steps up, and a new hire takes their old desk
+    careerEv('promo',heir,heir.name+' takes over as manager on floor '+flNo(heir)+' now that '+p.name+' is gone. Best earner on the team.');
+    const n=hireOne(old);if(n)n.mgr=heir.uid;}
+  else hireOne();
+  if(VIS)visSay(S.staff[0],['NEXT!']);
 }
 const simNow=()=>S.day+S.slot/SLOTS;
-function dueFires(){
+function dueFires(){   // outcomes of visitor votes, applied at the moment they were decided
   while(S.fi<FIRES.length&&FIRES[S.fi].t<=simNow()+1e-9){const ev=FIRES[S.fi++],p=S.staff.find(q=>q.uid===ev.uid);
-    if(p&&!p.boss){removeStaff(p,'fired',ev.yes===undefined?'':ev.yes+ev.no===0?'was fired after a vote nobody turned up for':'was voted out by visitors, '+ev.yes+' to '+ev.no);S.firm.fired++;hireOne();if(VIS)visSay(S.staff[0],['NEXT!']);}}
+    if(!p||p.boss)continue;if(ev.kind==='promote')promote(p,ev);else fireOne(p,ev);}
 }
 function advance(to){ // run the firm forward to sim time `to` (in trading days)
   while(!S.done&&simNow()+1/SLOTS<=to+1e-9){
@@ -1739,7 +1745,7 @@ function frame(){
 }
 
 /* ================= clock: normal pace is one trading day every 5 real minutes; the owner can change the pace for everyone, counted from the launch moment ================= */
-const LAUNCH=Date.UTC(2026,10,16,20,0),DAYMS=5*60*1000,SPEEDS={live:0,m1:60,s5:5,s1:1};
+const LAUNCH=Date.UTC(2026,10,16,20,30),DAYMS=5*60*1000,SPEEDS={live:0,m1:60,s5:5,s1:1};
 let speed='live',simT=0,reported=false,EVE=false;const SESS=.75;
 let OFF=0,RESIM=false;const nowS=()=>Date.now()+OFF;
 let SEGS=[];   // changes of pace made by the owner, shared by every visitor: from `at`, the clock reads `sim` days and runs at `dayms` per day
@@ -1770,22 +1776,16 @@ async function sync(){
     if(Array.isArray(st.speed)){const k=JSON.stringify(st.speed);if(k!==segKey){segKey=k;SEGS=st.speed.slice().sort((a,b)=>a.at-b.at);paceChanged();}}
     if(typeof st.viewers==='number'){$('h-watch-box').hidden=false;$('h-watch').textContent=String(Math.max(1,st.viewers));}
     for(const e of st.events||[]){lastEv=Math.max(lastEv,e.id);
-      if(e.kind==='fire'){const t=simOf(e.at);FIRES.push({t,uid:e.uid,yes:e.yes,no:e.no});if(S&&t<=simNow()+1e-9)back=true;}
-      else{PROMO[e.sim_day]=e.uid;if(S&&e.sim_day<S.day)back=true;}}
+      if(e.kind==='fire'||e.kind==='promote'){const t=simOf(e.at);FIRES.push({t,uid:e.uid,kind:e.kind,yes:e.yes,no:e.no});if(S&&t<=simNow()+1e-9)back=true;}}
     if((st.events||[]).length){FIRES.sort((a,b)=>a.t-b.t);if(S){S.fi=FIRES.findIndex(f=>f.t>simNow()-1e-6);if(S.fi<0)S.fi=FIRES.length;}if(back)RESIM=true;}  // an outcome that landed in the past: replay so everyone agrees
     showVotes();dirty=true;
   }catch(e){}finally{netBusy=false;}
 }
-function promoCands(){const e10=p=>earned(p,9)+p.dayEarn;return eligible(e10).slice(0,3).map(p=>({uid:p.uid,name:p.name,role:p.role,e:Math.round(e10(p))}));}
 let lastPace=-1;
 function netTick(){
   if(S&&paceNow()!==lastPace){lastPace=paceNow();paceChanged();}   // a change of pace has just taken effect
   if(!ONLINE||document.hidden||!S)return;
-  let near=false;
-  if(speed==='live'&&!S.done&&!EVE&&(S.day+1)%10===0){const left=realAt(S.day+SESS)-nowS();near=left<150000&&left>-30000;
-    if(left<135000&&left>35000&&promoTried!==S.day&&synced){promoTried=S.day;const c=promoCands();
-      if(c.length>=2)rpc('wbb_open_promo',{p_run:RUN,p_day:S.day,p_options:c,p_closes_ms:nowS()+left-15000}).then(sync).catch(()=>{});}}
-  if(Date.now()-netAt>=(POLLS.length||near?2500:10000))sync();
+  if(Date.now()-netAt>=(POLLS.length?2500:10000))sync();
   if(POLLS.length)showVotes();
 }
 const mmss=ms=>{const s=Math.max(0,Math.ceil(ms/1000));return Math.floor(s/60)+':'+String(s%60).padStart(2,'0');};
@@ -1795,14 +1795,12 @@ function showVotes(){
   const box=$('votes'),key=JSON.stringify(POLLS.map(q=>[q.id,q.status,q.tally,q.mine,q.result]));
   if(key!==voteKey){voteKey=key;box.textContent='';
     for(const q of POLLS){const done=q.status==='done',c=el('div','vote win'+(done?' done':'')),bar=el('div','wbar'),inn=el('div','in'),T=q.tally||{},n=k=>T[k]||0;
-      bar.append(el('span','',done?'VOTE CLOSED':q.kind==='fire'?'VOTE: FIRE?':'VOTE: PROMOTE WHO?'),(()=>{const e=el('em','');e.dataset.cd=q.id;return e;})());c.appendChild(bar);
-      const who=q.kind==='fire'?staffBy(q.target):null;inn.appendChild(who?face(who.look,'hs big'):face(S.staff[0].look,'hs big'));
-      if(q.kind==='fire'){const yes=done?n('yes'):n('1'),no=done?n('no'):n('0'),d=el('div');
-        d.append(el('b','',done?(q.result?q.label+' is fired':q.label+' keeps the job'):'Fire '+q.label+'?'),el('span','',done?(yes+no?yes+' to fire, '+no+' to keep':'Nobody voted, so the firing goes ahead')+(q.result?'. Out the door within the quarter hour.':''):who?who.role+' \u00b7 floor '+flNo(who)+' \u00b7 '+sshort(who.earn)+' so far':'Majority wins when the timer runs out'));inn.appendChild(d);
-        if(!done){const bs=el('div','vbtns');for(const [ch,txt,cl] of[[1,'Fire \u00b7 '+yes,'yes'],[0,'Keep \u00b7 '+no,'no']]){const b=el('button',cl,txt);b.type='button';b.setAttribute('aria-pressed',String(q.mine===ch));b.onclick=()=>castVote(q,ch);bs.appendChild(b);}inn.appendChild(bs);}}
-      else{const opts=q.options||[],win=opts.find(o=>o.uid===q.result),d=el('div');
-        d.append(el('b','',done?(win?win.name+' wins the vote':'No clear winner'):'Who gets promoted at today\u2019s close?'),el('span','',done?(win?'Promoted to manager when the day closes':'The usual rule decides: best earner of the last 10 days'):'Most votes wins. A tie or no votes leaves it to the usual rule.'));inn.appendChild(d);
-        if(!done){const bs=el('div','vbtns');for(const o of opts){const b=el('button','no',o.name.split(' ')[0]+' '+sshort(o.e)+' \u00b7 '+n(String(o.uid)));b.type='button';b.title=o.name+', '+(o.role||'')+', '+sshort(o.e)+' over 10 days';b.setAttribute('aria-label',o.name+', '+sshort(o.e)+' over 10 days, '+n(String(o.uid))+' votes');b.setAttribute('aria-pressed',String(q.mine===o.uid));b.onclick=()=>castVote(q,o.uid);bs.appendChild(b);}inn.appendChild(bs);}}
+      const fire=q.kind==='fire',who=staffBy(q.target),yes=done?n('yes'):n('1'),no=done?n('no'):n('0'),d=el('div');
+      bar.append(el('span','',done?'VOTE CLOSED':fire?'VOTE: FIRE?':'VOTE: PROMOTE?'),(()=>{const e=el('em','');e.dataset.cd=q.id;return e;})());c.appendChild(bar);
+      inn.appendChild(face((who||S.staff[0]).look,'hs big'));
+      d.append(el('b','',done?(fire?(q.result?q.label+' is fired':q.label+' keeps the job'):(q.result?q.label+' is promoted':q.label+' is not promoted')):(fire?'Fire ':'Promote ')+q.label+(fire?'?':' to manager?')),
+        el('span','',done?(yes+no?yes+(fire?' to fire, ':' to promote, ')+no+(fire?' to keep':' against'):'Nobody voted, so it goes ahead')+(q.result?(fire?'. Out the door within the quarter hour.':'. Takes effect within the quarter hour.'):''):who?who.role+' \u00b7 floor '+flNo(who)+' \u00b7 '+sshort(who.earn)+' so far':'Majority wins when the timer runs out'));inn.appendChild(d);
+      if(!done){const bs=el('div','vbtns');for(const [ch,txt,cl] of[[1,(fire?'Fire':'Promote')+' \u00b7 '+yes,fire?'yes':'yes good'],[0,(fire?'Keep':'Not yet')+' \u00b7 '+no,'no']]){const b=el('button',cl,txt);b.type='button';b.setAttribute('aria-pressed',String(q.mine===ch));b.onclick=()=>castVote(q,ch);bs.appendChild(b);}inn.appendChild(bs);}
       if(!done){const tb=el('div','vtime'),i=el('i');i.dataset.bar=q.id;tb.appendChild(i);inn.appendChild(tb);}
       c.appendChild(inn);box.appendChild(c);}}
   for(const q of POLLS){const left=q.closes-nowS(),e=box.querySelector('[data-cd="'+q.id+'"]'),i=box.querySelector('[data-bar="'+q.id+'"]');
@@ -1940,7 +1938,7 @@ function showPeople(){
     for(const q of team)tu.appendChild(prow(q,q.role+' \u00b7 floor '+flNo(q),earned(q,10)));
     if(!team.length){const e=el('li','empty','No team right now.');tu.appendChild(e);}li.appendChild(tu);kids.appendChild(li);}
   const solo=S.staff.filter(p=>p.rank==='emp'&&p.mgr===null).sort((a,b)=>fIndex(b.fl)-fIndex(a.fl));
-  if(!mgrs.length){const e=el('li','empty','No managers yet. The first promotion comes once a floor has at least four people and one of them has the best 10 days at the firm.');kids.appendChild(e);}
+  if(!mgrs.length){const e=el('li','empty','No managers yet. Open someone\u2019s profile and call a vote to promote them.');kids.appendChild(e);}
   if(solo.length){const h=el('li');h.appendChild(el('h3','','REPORT TO '+first(boss).toUpperCase()+' DIRECTLY \u00b7 '+solo.length));kids.appendChild(h);for(const q of solo)kids.appendChild(prow(q,q.role+' \u00b7 floor '+flNo(q),q.earn));}
   top.appendChild(kids);og.appendChild(top);
 }
@@ -1955,7 +1953,7 @@ let rosKey='',detKey='';
 function showProfiles(){
   const ro=$('roster');if(!staffBy(profUid))profUid=S.staff[0].uid;
   {const q=staffBy(profUid),op=POLLS.find(x=>x.kind==='fire'&&x.status==='open'),rk=profUid+'|'+S.staff.map(p=>p.uid+p.rank+sshort(p.earn)).join('|');
-    const dk=[q.uid,q.earn,q.trades,q.n,q.wins,q.lv,q.xp,Math.round(q.morale),Math.round(aggr(q)),q.feel,q.rank,q.mgr,q.fl,q.last.length&&q.last[0].pnl,armed.get(q.uid)>Date.now(),FIRES.length,op?op.id:0,Math.max(0,Math.ceil((COOL-nowS())/1000)),speed,synced,S.done,S.feed.length,teamOf(q).length].join('|');
+    const dk=[q.uid,q.earn,q.trades,q.n,q.wins,q.lv,q.xp,Math.round(q.morale),Math.round(aggr(q)),q.feel,q.rank,q.mgr,q.fl,q.last.length&&q.last[0].pnl,armed.get('fire'+q.uid)>Date.now(),armed.get('promote'+q.uid)>Date.now(),S.staff.filter(x=>x.rank==='mgr').map(x=>x.fl).join(),FIRES.length,op?op.id:0,Math.max(0,Math.ceil((COOL-nowS())/1000)),speed,synced,S.done,S.feed.length,teamOf(q).length].join('|');
     if(rk===rosKey&&dk===detKey)return;rosKey=rk;detKey=dk;}
   ro.textContent='';
   for(const p of S.staff){const b=el('button','prow');b.type='button';b.dataset.uid=p.uid;if(p.uid===profUid)b.setAttribute('aria-pressed','true');const d=el('div');d.append(el('b','',p.name),el('span','',p.role));
@@ -1963,20 +1961,23 @@ function showProfiles(){
   const p=staffBy(profUid),D=$('pdetail'),ag=aggr(p),m=p.boss?Math.min(24,6+Math.max(0,S.firm.ytd)/2e5):p.morale;D.textContent='';
   const top=el('div','ptop'),tt=el('div');tt.append(el('h3','',p.name),(()=>{const d=el('div','pm',p.role+' \u00b7 '+RANK[p.rank]);d.appendChild(el('em','',p.att));return d;})(),el('p','bio',p.bio));
   const acts=el('div','acts'),zb=el('button','solo','Watch them on floor '+(fIndex(p.fl)+1));zb.type='button';zb.onclick=()=>{$('prof-close').onclick();aimFloor(fIndex(p.fl));};acts.appendChild(zb);
-  if(!p.boss){const pending=FIRES.some(f=>f.uid===p.uid&&f.t>simNow()-1e-6),on=armed.get(p.uid)>Date.now(),open=POLLS.find(q=>q.kind==='fire'&&q.status==='open'),wait=Math.ceil((COOL-nowS())/1000);
-    const label=pending?'Leaving':!ONLINE?(on?'Confirm firing':'Fire'):!synced?'Voting is offline right now':open?(open.target===p.uid?'Vote under way':'Another vote is under way'):wait>0?'Next vote in '+wait+'s':on?'Confirm: start the vote':'Call a vote to fire';
-    const fb=el('button','solo fire',label);fb.type='button';fb.disabled=pending||S.done||(ONLINE&&(!synced||!!open||wait>0));if(on&&!fb.disabled)fb.dataset.arm='1';
-    fb.onclick=()=>{if(armed.get(p.uid)>Date.now()){armed.delete(p.uid);
-        if(ONLINE){rpc('wbb_open_fire',{p_run:RUN,p_uid:p.uid,p_name:p.name,p_voter:VOTER}).then(()=>{$('prof-close').onclick();sync();}).catch(()=>{});}
-        else{FIRES.push({t:simNow()+1e-4,uid:p.uid});FIRES.sort((a,b)=>a.t-b.t);S.fi=FIRES.findIndex(f=>f.t>simNow()-1e-6);if(S.fi<0)S.fi=FIRES.length;saveFires();}}
-      else armed.set(p.uid,Date.now()+3000);dirty=true;};acts.appendChild(fb);}
+  if(!p.boss){const pending=FIRES.find(f=>f.uid===p.uid&&f.t>simNow()-1e-6),open=POLLS.find(q=>q.status==='open'),wait=Math.ceil((COOL-nowS())/1000);
+    const blocked=ONLINE?(!synced?'Voting is offline right now':open?(open.target===p.uid?'Vote under way':'Another vote is under way'):wait>0?'Next vote in '+wait+'s':''):'';
+    const mk=(kind,cls,idle,offline,why)=>{const key=kind+p.uid,on=armed.get(key)>Date.now(),b=el('button','solo '+cls,pending?(pending.kind==='promote'?'Promotion on its way':'Leaving'):why||blocked||(on?(ONLINE?'Confirm: start the vote':'Confirm'):ONLINE?idle:offline));
+      b.type='button';b.disabled=!!pending||S.done||!!why||!!blocked;if(on&&!b.disabled)b.dataset.arm='1';
+      b.onclick=()=>{if(armed.get(key)>Date.now()){armed.delete(key);
+          if(ONLINE){rpc('wbb_open_vote',{p_run:RUN,p_kind:kind,p_uid:p.uid,p_name:p.name,p_voter:VOTER}).then(()=>{$('prof-close').onclick();sync();}).catch(()=>{});}
+          else{FIRES.push({t:simNow()+1e-4,uid:p.uid,kind});FIRES.sort((a,b)=>a.t-b.t);S.fi=FIRES.findIndex(f=>f.t>simNow()-1e-6);if(S.fi<0)S.fi=FIRES.length;saveFires();}}
+        else armed.set(key,Date.now()+3000);dirty=true;};acts.appendChild(b);};
+    if(p.rank==='emp'){const taken=S.staff.find(q=>q.rank==='mgr'&&q.fl===dest(p));mk('promote','promo','Call a vote to promote','Promote',taken?'Floor '+flNo(taken)+' already has a manager':'');}
+    mk('fire','fire','Call a vote to fire','Fire','');}
   tt.appendChild(acts);top.append(face(p.look,'hs huge'),tt);D.appendChild(top);
   const tiles=el('div','sum');for(const [k,v,c] of[['Earnings',signed(p.earn),cls(p.earn)],['Book value',short(Math.max(0,p.book0+p.earn))],['Trades',p.trades.toLocaleString('en-US')],['Winning trades',p.n?Math.round(p.wins/p.n*100)+'%':'-'],['Risk multiplier',lev(p).toFixed(1)+'x'],['Level',String(p.lv)]]){const t=el('div');t.append(el('small','',k),el('b',c||'',v));tiles.appendChild(t);}
   D.appendChild(tiles);
   const bar=(c,label,w)=>{const d=el('div','meter '+c),b=el('div'),i=el('i');i.style.width=Math.max(0,Math.min(100,w))+'%';b.appendChild(i);d.append(el('span','',label),b);return d;};
   D.append(bar('ag','Aggressiveness',ag),bar('m1'+(m<35?' low':''),p.boss?'Satisfaction':'Morale',m),bar('xp','Next level',p.xp/p.lv));
   const fl=el('p','fl');fl.append('Trades ',el('b','',STYLE(ag)),', ',STYLE_NAME[p.style],'. Feeling ',el('b','',p.feel.toLowerCase()),'. Joined on day '+(p.since+1)+'.');D.appendChild(fl);
-  {const team=teamOf(p),m=p.mgr!==null&&staffBy(p.mgr),t=p.rank==='boss'?'Runs the firm.':p.rank==='mgr'?'Manager since day '+(p.mgrSince+1)+', trading twice as often. '+(team.length?'Leads '+team.map(q=>q.name).join(', ')+'.':'No team right now.'):m?'Reports to '+m.name+'. Takes the job if '+first(m)+' has a losing 10 days while they have a winning one.':'Reports to '+S.staff[0].name+' directly.';D.appendChild(el('p','fl',t));}
+  {const team=teamOf(p),m=p.mgr!==null&&staffBy(p.mgr),t=p.rank==='boss'?'Runs the firm.':p.rank==='mgr'?'Manager since day '+(p.mgrSince+1)+', trading twice as often. '+(team.length?'Leads '+team.map(q=>q.name).join(', ')+'.':'No team right now.'):m?'Reports to '+m.name+'. If '+first(m)+' is voted out, the best earner on the team takes over.':'Reports to '+S.staff[0].name+' directly.';D.appendChild(el('p','fl',t));}
   const cols=el('div','pcols'),c1=el('div'),c2=el('div');c1.appendChild(el('h4','','Recent trades'));c2.appendChild(el('h4','','What they have been saying'));
   const tl=el('ol','rows');for(const t of p.last){const li=el('li');li.append(el('span','',t.side+' '+DATA.tk[t.tk][0]+' · '+pct(t.mv)+' · day '+(t.d+1)),el('span',cls(t.pnl),signed(t.pnl)));tl.appendChild(li);}
   if(!p.last.length)tl.appendChild(el('li','empty','No trades yet.'));c1.appendChild(tl);
@@ -2035,7 +2036,7 @@ function showReport(){
   tiles(sec('The run so far'),[['Earnings',signed(F.ytd),cls(F.ytd)],['Return on starting capital',pct(r,1),cls(r)],['S&P 500 over the same period',pct(spy,1),cls(spy)],['Firm book value',short(capital()+F.ytd)],
     ['Days up / down',F.up+' / '+F.down],['Days that hit 10%',String(F.hit)],['Best day',F.bestDay?pct(F.bestDay.r,1)+' on '+DATA.dates[F.bestDay.day]:'-','up'],['Worst day',F.worstDay?pct(F.worstDay.r,1)+' on '+DATA.dates[F.worstDay.day]:'-','down'],
     ['Trades placed',F.ytdTrades.toLocaleString('en-US')],['Dollar volume',short(F.ytdVol)]]);
-  tiles(sec('The building'),[['Floors',NF+' of 8'],['Staff at the close',S.staff.length+' of 80'],['Hired',String(F.hires)],['Fired by you',String(F.fired)],['Laid off after a 10% losing day',String(F.laid)],['Promotions',String(F.promos)],['Demotions',String(F.demos)],['Starting staff','1, the founder']]);
+  tiles(sec('The building'),[['Floors',NF+' of 8'],['Staff at the close',S.staff.length+' of 80'],['Hired',String(F.hires)],['Fired by vote',String(F.fired)],['Promotions',String(F.promos)],['Demotions',String(F.demos)],['Starting staff','1, the founder']]);
   rows(sec('Top earners'),top.slice(0,5).map(p=>[p.name+', '+p.role.toLowerCase(),signed(p.earn),cls(p.earn)]));
   rows(sec('Bottom of the board'),top.slice(-3).reverse().map(p=>[p.name+', '+p.role.toLowerCase(),signed(p.earn),cls(p.earn)]));
   rows(sec('Most traded stocks'),stk.map(i=>[DATA.tk[i][0]+' · '+DATA.tk[i][1],Math.round(S.st.n[i]).toLocaleString('en-US')+' trades, '+signed(S.st.pnl[i]),cls(S.st.pnl[i])]));
