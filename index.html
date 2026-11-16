@@ -171,7 +171,9 @@ body.closed #callouts{right:12px}
 #report-body section:first-child .sum.two{grid-template-columns:repeat(4,1fr)}
 .quote{margin:0;font-size:14px;line-height:1.5;max-width:60ch}
 .acts{display:flex;gap:8px;flex-wrap:wrap}
-#help .sheet,#intro .sheet,#admin .sheet{max-width:560px}
+#intro .sheet,#admin .sheet{max-width:560px}
+#help .sheet{max-width:780px}
+#help .tiles b.up,#help .hpanel li b.up{color:var(--up)}#help .tiles b.down,#help .hpanel li b.down{color:var(--down)}#help .tiles b.gold{color:var(--gold)}
 #gate .sheet{max-width:380px}
 #gate-pw{width:100%;box-sizing:border-box;background:var(--panel);border:1px solid var(--line2);color:var(--ink);font-family:var(--body);font-size:14px;padding:8px 10px;min-height:36px}
 #gate-pw:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -182,8 +184,33 @@ body.closed #callouts{right:12px}
 #jump{width:90px;background:var(--panel);border:1px solid var(--line2);color:var(--ink);font-family:var(--body);font-size:13px;padding:6px 8px;min-height:30px}
 #jump:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 #admin em{font-style:normal;color:var(--dim);font-size:12px}
-#help li{padding:8px 0;border-top:1px dashed var(--line2);display:grid;grid-template-columns:118px 1fr;gap:12px;font-size:12px}
-#help li b{font-family:var(--display);font-weight:400;font-size:10px;letter-spacing:.1em;color:var(--accent)}
+/* the new part: a tab strip, then one panel at a time */
+#help .htabs{display:flex;gap:4px;padding:8px 10px;border-bottom:1px solid var(--line2);overflow-x:auto;scrollbar-width:thin}
+#help .htabs button{flex:1 0 auto;white-space:nowrap;padding:6px 12px}
+#help .hpanel{padding:20px 22px 22px;display:flex;flex-direction:column;gap:16px;min-height:430px}
+#help .hpanel[hidden]{display:none}
+#help .hpanel h2{font-family:var(--display);font-weight:400;font-size:16px;margin:0;color:var(--accent);letter-spacing:.04em;text-wrap:balance}
+#help .lead{max-width:62ch}
+#help .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#help .tiles div{background:var(--panel);border:1px solid var(--line);padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+#help .tiles b{font-family:var(--display);font-weight:400;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+#help .tiles b.up{color:var(--up)}.tiles b.down{color:var(--down)}.tiles b.gold{color:var(--gold)}
+#help .tiles small{font-size:11px;color:var(--dim)}
+#help .hpanel h3{font-family:var(--display);font-weight:400;font-size:10px;letter-spacing:.14em;color:var(--dim);margin:4px 0 -8px;text-transform:uppercase}
+#help .hpanel h3::before{content:'> ';color:var(--accent)}
+#help .hpanel ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+#help .hpanel li{position:relative;padding:8px 0 8px 20px;border-top:1px dashed var(--line2);font-size:13px;max-width:70ch}
+#help .hpanel li::before{content:'';position:absolute;left:3px;top:15px;width:6px;height:6px;background:var(--accent)}
+#help .hpanel li b{font-weight:500;color:var(--accent)}
+#help .hpanel li .up{color:var(--up)}.hpanel li .down{color:var(--down)}
+#help .formula{font-size:12px;background:var(--panel);border:1px solid var(--line);padding:10px 12px;color:var(--ink);overflow-x:auto;white-space:nowrap}
+#help .formula em{font-style:normal;color:var(--dim)}
+#help .foot{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:12px 22px;border-top:1px solid var(--line2);flex-wrap:wrap}
+#help .foot span{color:var(--dim);font-size:11px}
+@media (max-width:620px){
+  #help .hpanel{padding:16px 14px 18px;min-height:0}#help .tiles{grid-template-columns:minmax(0,1fr)}#help .tiles div{flex-direction:row;align-items:baseline;gap:10px}
+  #help .foot{padding:10px 14px}#help .htabs button{min-height:40px}
+}
 
 #profiles{position:absolute;inset:0;z-index:7;background:var(--bg);display:flex;flex-direction:column}
 #profiles[hidden]{display:none}
@@ -209,7 +236,6 @@ button.fire:disabled{color:var(--dim);border-color:var(--line)}
   #report-body{grid-template-columns:minmax(0,1fr)}#report-body section:first-child .sum.two{grid-template-columns:repeat(2,1fr)}
   .pbody{grid-template-columns:minmax(0,1fr);overflow:auto}#roster{border-right:0;border-bottom:1px solid var(--line2);max-height:38vh}
   .pcols{grid-template-columns:minmax(0,1fr)}.ptop{flex-direction:column}
-  #help li{grid-template-columns:minmax(0,1fr);gap:2px}
 }
 /* ---------- phones: slim status strip on top, floor strip below, menu as a sheet ---------- */
 .sh{display:none}
@@ -387,19 +413,145 @@ body.mob.land.closed #callouts{right:6px}
   <div id="help" class="over" hidden role="dialog" aria-labelledby="help-h">
     <div class="sheet win">
       <div class="wbar"><span id="help-h">HOW IT WORKS</span><i></i><i></i></div>
-      <div class="in scan">
-        <p class="hint">A day trading firm that grows or shrinks on real S&amp;P 500 prices, replayed from January 2020. You are watching, and you can fire people.</p>
-        <ul>
-          <li><b>THE START</b><span>One man, one desk. Every trade uses a real stock's real move that day, multiplied by how much risk the trader takes.</span></li>
-          <li><b>HIRING</b><span>A day that earns 10% or more adds one person at the close. Each floor seats 10; a new floor opens when the ones below are full.</span></li>
-          <li><b>LOSSES</b><span>A day that loses 13% or more costs that day's worst earner their job.</span></li>
-          <li><b>PROMOTIONS</b><span>Every 10 trading days the best earner becomes a manager, moves up a floor, trades twice as often and gets a team. If a manager loses money over 10 days while someone on the team makes money, that person takes the job. A losing month also costs a manager the title.</span></li>
-          <li><b>THE CLOCK</b><span>One trading day passes every 25 minutes, the same for every visitor, so the whole replay takes 30 days. The firm is replaying history from January 2020 and will switch to live prices when it catches up to today.</span></li>
-          <li><b>WATCHING</b><span>Click a floor to zoom in. The feed shows what people are thinking; click an entry to jump to that person.</span></li>
-          <li><b>FIRING</b><span id="help-fire">Open a profile from the People tab to fire someone. A replacement is hired on the spot.</span></li>
-        </ul>
-        <div class="acts"><button id="help-close" class="solo">Got it</button></div>
+      <div class="htabs" role="tablist" aria-label="How it works">
+        <button role="tab" id="ht-0" aria-controls="hp-0" aria-selected="true">The basics</button>
+        <button role="tab" id="ht-1" aria-controls="hp-1" aria-selected="false" tabindex="-1">Trading</button>
+        <button role="tab" id="ht-2" aria-controls="hp-2" aria-selected="false" tabindex="-1">Hiring and layoffs</button>
+        <button role="tab" id="ht-3" aria-controls="hp-3" aria-selected="false" tabindex="-1">Promotions</button>
+        <button role="tab" id="ht-4" aria-controls="hp-4" aria-selected="false" tabindex="-1">Voting</button>
+        <button role="tab" id="ht-5" aria-controls="hp-5" aria-selected="false" tabindex="-1">Clock and data</button>
       </div>
+
+      <section class="hpanel scan" id="hp-0" role="tabpanel" aria-labelledby="ht-0">
+        <h2>A trading firm that lives on this page</h2>
+        <p class="lead">It runs whether or not anyone is watching, and every visitor sees the same firm at the same moment.</p>
+        <div class="tiles">
+          <div><b>1</b><small>man and one desk on day one</small></div>
+          <div><b>80</b><small>desks if the tower ever fills</small></div>
+          <div><b class="gold">30 days</b><small>from 2020 to today</small></div>
+        </div>
+        <ul>
+          <li>It started in <b>January 2020</b> with the founder, Walt Mercer, alone on the trading floor.</li>
+          <li>Every trade uses a <b>real S&amp;P 500 stock's real price move</b> from that day.</li>
+          <li>Good days add people and floors. Bad days cost people their jobs.</li>
+          <li>The tower can reach 8 floors. Nothing guarantees it gets there.</li>
+          <li>You can vote on who gets fired and who gets promoted.</li>
+          <li>The people and their dollar figures are fiction. The prices are real.</li>
+        </ul>
+        <h3>Getting around</h3>
+        <ul>
+          <li><b>Click a floor</b> to zoom in and watch. Scroll or pinch to zoom, drag to move.</li>
+          <li><b>Feed</b> shows what people are thinking. Click an entry to jump to that person.</li>
+          <li><b>People</b> has everyone's profile, the staff list and the org chart.</li>
+          <li><b>Greyed-out floors</b> above the roof are not built yet.</li>
+        </ul>
+      </section>
+
+      <section class="hpanel scan" id="hp-1" role="tabpanel" aria-labelledby="ht-1" hidden>
+        <h2>How a trade makes or loses money</h2>
+        <p class="lead">Everyone at the firm is a day trader. Nothing is held overnight.</p>
+        <div class="tiles">
+          <div><b>1x to 10x</b><small>risk multiplier per trader</small></div>
+          <div><b>25% to 90%</b><small>of their book on one trade</small></div>
+          <div><b>15 min to 2 hr</b><small>how long a trade is held</small></div>
+        </div>
+        <p class="formula">result <em>=</em> position size <em>×</em> the stock's real move <em>×</em> risk multiplier <em>×</em> firm leverage (3x)</p>
+        <ul>
+          <li><b>Picking stocks:</b> a mix of big names everyone trades and each person's own watchlist. Aggressive traders go for the volatile ones.</li>
+          <li><b>Buy or short:</b> each trader has a style. Some ride momentum, some bet against the crowd, some follow yesterday's numbers, some trade on hunches, some just buy and believe.</li>
+          <li><b>Risk multiplier:</b> set by how aggressive the trader is. It creeps up when their morale is high and the market is rising.</li>
+          <li><b>Morale:</b> wins raise it, losses lower it. Thick-skinned people lose less of it.</li>
+          <li><b>Levels:</b> experience from trading adds 8% to a trader's results per level.</li>
+          <li><b>Managers</b> run two books at once, so they make twice the trades.</li>
+          <li><b>The bell:</b> every open trade is closed at the end of the day.</li>
+        </ul>
+      </section>
+
+      <section class="hpanel scan" id="hp-2" role="tabpanel" aria-labelledby="ht-2" hidden>
+        <h2>How the firm grows and shrinks</h2>
+        <p class="lead">One number decides it: the day's earnings as a share of the firm's capital, checked at every close.</p>
+        <div class="tiles">
+          <div><b class="up">+10% day</b><small>one new hire</small></div>
+          <div><b class="down">−13% day</b><small>one layoff</small></div>
+          <div><b>10</b><small>desks on each floor</small></div>
+        </div>
+        <ul>
+          <li><b class="up">Up 10% or more:</b> one person is hired at the close.</li>
+          <li><b class="down">Down 13% or more:</b> that day's worst earner is laid off.</li>
+          <li><b>Anything in between:</b> nobody comes or goes, and Walt writes an unhappy summary.</li>
+          <li><b>The penthouse:</b> when the first floor is full, Walt builds himself an office on top and moves up.</li>
+          <li><b>New floors</b> open under the penthouse as the ones below fill: 7 working floors plus his.</li>
+          <li><b>Capital</b> means everyone's starting book added together, so each hire raises the bar for the next 10% day.</li>
+          <li>Walt cannot be laid off or fired. It is his name on the lease.</li>
+        </ul>
+      </section>
+
+      <section class="hpanel scan" id="hp-3" role="tabpanel" aria-labelledby="ht-3" hidden>
+        <h2>Who becomes a manager, and who stops being one</h2>
+        <p class="lead">Every 10 trading days the best earner is promoted. Keeping the job is harder than getting it.</p>
+        <div class="tiles">
+          <div><b>10 days</b><small>between promotion checks</small></div>
+          <div><b>2x</b><small>the trades once promoted</small></div>
+          <div><b>1</b><small>manager per floor</small></div>
+        </div>
+        <h3>Getting promoted</h3>
+        <ul>
+          <li><b>Who:</b> the best earner of the last 10 trading days, if they finished in profit and have been at the firm at least that long.</li>
+          <li><b>The move:</b> up one floor. If that floor is full they swap desks with its weakest earner. On the top floor they stay put.</li>
+          <li><b>The team:</b> the three newest people from the floor they left.</li>
+          <li><b>The catch:</b> twice the trades means a bad stretch is twice as bad.</li>
+        </ul>
+        <h3>Losing the job</h3>
+        <ul>
+          <li><b>Takeover:</b> if a manager loses money over 10 days while someone on their team makes money, that person takes the title and the desk.</li>
+          <li><b>Losing month:</b> a manager who is down over 20 trading days is demoted, and the team reports to Walt again.</li>
+          <li>See who reports to whom under <b>People, then Org chart</b>.</li>
+        </ul>
+      </section>
+
+      <section class="hpanel scan" id="hp-4" role="tabpanel" aria-labelledby="ht-4" hidden>
+        <h2>You get a say</h2>
+        <p class="lead">Votes are shared. What visitors decide happens for everyone, and it changes how the firm's story goes.</p>
+        <div class="tiles">
+          <div><b>3 minutes</b><small>to vote once one opens</small></div>
+          <div><b>Majority</b><small>wins, even at 1 to 0</small></div>
+          <div><b>1</b><small>firing vote at a time</small></div>
+        </div>
+        <h3>Firing someone</h3>
+        <ul>
+          <li>Open a profile from the <b>People</b> tab and press <b>Call a vote to fire</b>.</li>
+          <li>Everyone watching gets a popup with a three-minute timer.</li>
+          <li><b>More votes to fire than to keep:</b> they are out. <b>A tie:</b> they stay.</li>
+          <li><b>Nobody votes:</b> the firing goes ahead.</li>
+          <li>A replacement is hired on the spot. The next vote can start 30 seconds later.</li>
+        </ul>
+        <h3>Choosing a manager</h3>
+        <ul>
+          <li>Three minutes before every tenth close, a vote opens between the <b>top three earners</b>.</li>
+          <li>Most votes wins. A tie, or no votes, leaves it to the usual rule.</li>
+        </ul>
+      </section>
+
+      <section class="hpanel scan" id="hp-5" role="tabpanel" aria-labelledby="ht-5" hidden>
+        <h2>What is real and how time passes</h2>
+        <p class="lead">The clock is the same for every visitor. Close the page and the firm carries on without you.</p>
+        <div class="tiles">
+          <div><b>25 min</b><small>is one trading day</small></div>
+          <div><b>1,726</b><small>trading days to replay</small></div>
+          <div><b>481</b><small>S&amp;P 500 stocks</small></div>
+        </div>
+        <ul>
+          <li><b>A day:</b> about 19 minutes of trading from the open to the bell, then about 6 minutes of evening while the lights go down.</li>
+          <li><b>The replay:</b> January 2020 to November 2026, including the 2020 crash, in 30 real days.</li>
+          <li><b>After that:</b> the firm catches up to today and moves on to live prices.</li>
+          <li><b>What is real:</b> each stock's open, high, low and close for every day.</li>
+          <li><b>What is drawn in:</b> the path a price takes between those four points during the day.</li>
+          <li><b>Which stocks:</b> S&amp;P 500 companies that have traded since January 2020.</li>
+          <li><b>Watching</b> in the status bar is how many people have the firm open right now.</li>
+        </ul>
+      </section>
+
+      <div class="foot"><span>Use the tabs above, or the left and right arrow keys.</span><button id="help-close" class="solo" aria-pressed="true">Got it</button></div>
     </div>
   </div>
 </div>
@@ -1843,6 +1995,8 @@ function showReport(){
   $('report').hidden=false;$('r-open').hidden=false;dirty=true;
 }
 $('r-close').onclick=()=>{$('report').hidden=true;};
+{const tabs=[...document.querySelectorAll('#help .htabs [role=tab]')],pick=(i,f)=>{tabs.forEach((t,k)=>{const on=k===i;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;$(t.getAttribute('aria-controls')).hidden=!on;});if(f)tabs[i].focus();tabs[i].scrollIntoView({block:'nearest',inline:'nearest'});};
+  tabs.forEach((t,i)=>{t.onclick=()=>pick(i);t.onkeydown=e=>{const n=tabs.length,k=e.key==='ArrowRight'?(i+1)%n:e.key==='ArrowLeft'?(i+n-1)%n:e.key==='Home'?0:e.key==='End'?n-1:-1;if(k>=0){e.preventDefault();pick(k,true);}};});}
 const seenIntro=()=>{$('intro').hidden=true;try{localStorage.setItem('wbb-seen','1');}catch(e){}};
 $('intro-go').onclick=seenIntro;$('intro-how').onclick=()=>{seenIntro();$('help').hidden=false;};
 /* admin: open by adding #admin to the page address */
@@ -1923,7 +2077,7 @@ let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(fit,120);})
 for(const c of[bg,curb,fg,east]){c.width=W;c.height=H;}
 (async()=>{
   try{PX=await unpack(DATA.px);SPYD=await unpack(DATA.spy);}catch(e){$('clock').textContent='This browser could not unpack the price data. Try a current version of Chrome, Safari, Firefox or Edge.';return;}
-  if(ONLINE){setInterval(netTick,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();});$('help-fire').textContent='Open a profile from the People tab to call a vote. Everyone watching gets three minutes to vote; the majority wins and a replacement is hired on the spot. One firing vote at a time.';}
+  if(ONLINE){setInterval(netTick,1000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync();});}
   if(ONLINE)await Promise.race([sync(),new Promise(r=>setTimeout(r,4000))]);
   newSim();rebuildCity();VIS=false;simT=liveT();advance(Math.floor(simT)+Math.min(1,(simT%1)/SESS));VIS=true;NF=height();PENT=S.pent;syncAgents(true);buildList();
   {const st=$('stage');if(st.clientWidth<=720||(st.clientHeight<=480&&st.clientWidth>st.clientHeight))document.body.classList.add('closed');}fit();if(MOB)fit();cam.x=aim.x;cam.y=aim.y;cam.z=aim.z;setSpeed('live');
