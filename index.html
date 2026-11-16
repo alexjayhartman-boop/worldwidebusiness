@@ -16,6 +16,7 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
+@supports (height:100dvh){html,body{height:100dvh}}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:13px;line-height:1.45;display:flex;flex-direction:column;overflow:hidden}
 ol,ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .up{color:var(--up)}.down{color:var(--down)}
@@ -36,6 +37,9 @@ button:disabled{color:var(--dim);border-color:var(--line);cursor:default}
 .wbar span{margin-right:auto}
 .wbar i{width:9px;height:9px;border:1px solid var(--keyink);display:block}
 .wbar i:last-child{background:var(--keyink)}
+.wbar .x{min-height:26px;min-width:34px;padding:0 8px;margin:-3px -5px -3px 0;background:var(--keyink);color:var(--key);border:0;box-shadow:none;font-size:13px;line-height:1}
+.wbar .x:hover,.wbar .x:focus-visible{background:var(--down);color:var(--keyink)}
+body.mob .wbar .x{min-height:40px;min-width:48px;font-size:16px}
 .scan{background-image:repeating-linear-gradient(0deg,rgba(201,179,255,.03) 0 1px,transparent 1px 3px)}
 
 header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 12px;border-bottom:1px solid var(--line2);z-index:5;background:var(--bg)}
@@ -175,6 +179,9 @@ button.promo{color:var(--up);border-color:var(--up)}button.promo[data-arm="1"]{b
 .acts{display:flex;gap:8px;flex-wrap:wrap}
 #intro .sheet,#admin .sheet{max-width:560px}
 #help .sheet{max-width:780px}
+#help .foot{position:sticky;bottom:0;background:var(--scr);z-index:1;box-shadow:0 40px 0 var(--scr)}
+body.mob #help .foot span{display:none}body.mob #help .foot{justify-content:flex-end}body.mob #help .foot button{min-height:42px;min-width:120px}
+.over{padding-bottom:calc(22px + env(safe-area-inset-bottom,0px))}body.mob .over{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
 #help .tiles b.up,#help .hpanel li b.up{color:var(--up)}#help .tiles b.down,#help .hpanel li b.down{color:var(--down)}#help .tiles b.gold{color:var(--gold)}
 #gate .sheet{max-width:380px}
 #gate-pw{width:100%;box-sizing:border-box;background:var(--panel);border:1px solid var(--line2);color:var(--ink);font-family:var(--body);font-size:14px;padding:8px 10px;min-height:36px}
@@ -379,7 +386,7 @@ body.mob.land.closed #callouts{right:6px}
   </div>
   <div id="report" class="over" hidden role="dialog" aria-labelledby="report-h">
     <div class="sheet win">
-      <div class="wbar"><span>REPORT TO DATE</span><i></i><i></i></div>
+      <div class="wbar"><span>REPORT TO DATE</span><button type="button" class="x" aria-label="Close">✕</button></div>
       <div class="in scan">
         <h2 id="report-h">Worldwide Business of Business: report to date</h2>
         <p id="report-sub"></p>
@@ -390,7 +397,7 @@ body.mob.land.closed #callouts{right:6px}
   </div>
   <div id="intro" class="over" hidden role="dialog" aria-labelledby="intro-h">
     <div class="sheet win">
-      <div class="wbar"><span id="intro-h">WELCOME</span><i></i><i></i></div>
+      <div class="wbar"><span id="intro-h">WELCOME</span><button type="button" class="x" aria-label="Close">✕</button></div>
       <div class="in scan">
         <h2 class="big">Worldwide Business of Business</h2>
         <p class="lead">A tiny trading firm that lives on this page.</p>
@@ -402,7 +409,7 @@ body.mob.land.closed #callouts{right:6px}
   </div>
   <div id="gate" class="over" hidden role="dialog" aria-labelledby="gate-h">
     <div class="sheet win">
-      <div class="wbar"><span id="gate-h">ADMIN SIGN IN</span><i></i><i></i></div>
+      <div class="wbar"><span id="gate-h">ADMIN SIGN IN</span><button type="button" class="x" aria-label="Close">✕</button></div>
       <form id="gate-f" class="in scan" autocomplete="off">
         <label class="hint" for="gate-pw">Owner password</label>
         <input id="gate-pw" type="password" autocomplete="current-password" spellcheck="false">
@@ -413,7 +420,7 @@ body.mob.land.closed #callouts{right:6px}
   </div>
   <div id="admin" class="over" hidden role="dialog" aria-labelledby="admin-h">
     <div class="sheet win">
-      <div class="wbar"><span id="admin-h">ADMIN</span><i></i><i></i></div>
+      <div class="wbar"><span id="admin-h">ADMIN</span><button type="button" class="x" aria-label="Close">✕</button></div>
       <div class="in scan">
         <p class="hint">Controls for the owner. The first row changes the pace for every visitor. Everything below it changes only what you see in this browser.</p>
         <div class="group"><span>SPEED FOR EVERYONE</span>
@@ -432,7 +439,7 @@ body.mob.land.closed #callouts{right:6px}
   </div>
   <div id="help" class="over" hidden role="dialog" aria-labelledby="help-h">
     <div class="sheet win">
-      <div class="wbar"><span id="help-h">HOW IT WORKS</span><i></i><i></i></div>
+      <div class="wbar"><span id="help-h">HOW IT WORKS</span><button type="button" class="x" aria-label="Close">✕</button></div>
       <div class="htabs" role="tablist" aria-label="How it works">
         <button role="tab" id="ht-0" aria-controls="hp-0" aria-selected="true">The basics</button>
         <button role="tab" id="ht-1" aria-controls="hp-1" aria-selected="false" tabindex="-1">Trading</button>
@@ -1816,7 +1823,7 @@ function showHints(){hintQ=false;const box=$('hints'),seen=new Set(),top=[...doc
     const r=e.getBoundingClientRect(),down=e.scrollHeight-e.clientHeight-e.scrollTop>8,right=e.scrollWidth-e.clientWidth-e.scrollLeft>8;
     for(const [dir,on] of[['v',down],['h',right]]){if(!on||r.width<40||r.height<30)continue;const k=sel+dir+[...document.querySelectorAll(sel)].indexOf(e);seen.add(k);
       let h=HINTS.get(k);if(!h){h=document.createElement('div');h.className=dir==='v'?'morev':'moreh';const sp=document.createElement('span');sp.textContent=dir==='v'?'\u25bc MORE':'\u25b6';h.appendChild(sp);box.appendChild(h);HINTS.set(k,h);}
-      if(dir==='v'){h.style.left=r.left+'px';h.style.width=e.clientWidth+'px';h.style.top=(r.bottom-40)+'px';}else{h.style.top=r.top+'px';h.style.height=e.clientHeight+'px';h.style.left=(r.left+e.clientWidth-40)+'px';}}}
+      if(dir==='v'){const ft=e.id==='help'?e.querySelector('.foot').offsetHeight:0;h.style.left=r.left+'px';h.style.width=e.clientWidth+'px';h.style.top=(r.bottom-40-ft)+'px';}else{h.style.top=r.top+'px';h.style.height=e.clientHeight+'px';h.style.left=(r.left+e.clientWidth-40)+'px';}}}
   for(const [k,h] of HINTS)if(!seen.has(k)){h.remove();HINTS.delete(k);}}
 const queueHints=()=>{if(!hintQ){hintQ=true;requestAnimationFrame(showHints);}};
 addEventListener('scroll',queueHints,true);addEventListener('resize',queueHints);addEventListener('click',()=>setTimeout(queueHints,60),true);
@@ -1844,6 +1851,7 @@ const sshort=v=>(v<0?'':'+')+short(v);
 const cls=v=>v>=0?'up':'down',pct=(v,n)=>(v<0?'−':'+')+Math.abs(v*100).toFixed(n===undefined?2:n)+'%',arrow=v=>(v>=0?'▲ ':'▼ ')+Math.abs(v*100).toFixed(1)+'%';
 const dateOf=d=>new Date(DATA.dates[Math.max(0,Math.min(d,ND-1))]+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',year:'numeric'});
 function clockText(){
+  if(speed==='live'&&!SEGS.length&&nowS()<LAUNCH){const w=Math.ceil((LAUNCH-nowS())/1000);return 'Opening bell in '+Math.floor(w/60)+':'+String(w%60).padStart(2,'0')+' \u00b7 the firm starts on '+dateOf(0);}
   if(speed==='live'&&paceNow()===0&&!S.done)return 'Paused by the owner \u00b7 Day '+(S.day+1)+' \u00b7 '+dateOf(S.day);
   if(S.done)return 'Caught up to '+dateOf(ND-1)+' · live prices come next';
   if(MOB){if(EVE)return 'Day '+S.day+' \u00b7 '+dateOf(S.day-1).replace(/^\w+, /,'')+' \u00b7 after the close';const m=Math.floor(570+S.slot/SLOTS*390),h=Math.floor(m/60);
@@ -2047,6 +2055,10 @@ function showReport(){
   $('report').hidden=false;$('r-open').hidden=false;dirty=true;
 }
 $('r-close').onclick=()=>{$('report').hidden=true;};
+{const CLOSER={help:'help-close',intro:'intro-go',admin:'admin-close',gate:'gate-x',report:'r-close'};
+  for(const o of document.querySelectorAll('.over')){const shut=()=>{const b=$(CLOSER[o.id]);if(b)b.click();else o.hidden=true;};
+    const x=o.querySelector('.wbar .x');if(x)x.onclick=shut;
+    o.addEventListener('click',e=>{if(e.target===o)shut();});}}
 {const tabs=[...document.querySelectorAll('#help .htabs [role=tab]')],pick=(i,f)=>{tabs.forEach((t,k)=>{const on=k===i;t.setAttribute('aria-selected',String(on));t.tabIndex=on?0:-1;$(t.getAttribute('aria-controls')).hidden=!on;});if(f)tabs[i].focus();tabs[i].scrollIntoView({block:'nearest',inline:'nearest'});};
   tabs.forEach((t,i)=>{t.onclick=()=>pick(i);t.onkeydown=e=>{const n=tabs.length,k=e.key==='ArrowRight'?(i+1)%n:e.key==='ArrowLeft'?(i+n-1)%n:e.key==='Home'?0:e.key==='End'?n-1:-1;if(k>=0){e.preventDefault();pick(k,true);}};});}
 const seenIntro=()=>{$('intro').hidden=true;try{localStorage.setItem('wbb-seen','1');}catch(e){}};
