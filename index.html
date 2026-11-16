@@ -375,7 +375,6 @@ body.mob.land.closed #callouts{right:6px}
       <ol id="picks" class="mini"></ol>
       <h2>Latest trades</h2>
       <ol id="trades" class="mini"></ol>
-      <button id="undo" class="solo" hidden>Undo my firings</button>
       <p class="note">Stock moves are real S&amp;P 500 prices, replayed from January 2001. The firm, its people and their dollar figures are fiction. A 10% day adds a hire. Nobody is fired or promoted unless visitors vote for it. Each floor seats 10.</p>
     </section>
     </div>
@@ -2008,7 +2007,6 @@ function showNumbers(){
   if(!idx.length)ul.appendChild(el('li','empty','No trades yet.'));
   const tl=$('trades');tl.textContent='';
   for(const t of S.trades.slice(0,6)){const li=el('li');li.append(el('span','',t.side+' '+DATA.tk[t.tk][0]+' · '+t.who),el('span',cls(t.pnl),signed(t.pnl)),el('span','sub',tradeLine(t)));tl.appendChild(li);}
-  $('undo').hidden=!FIRES.length;
 }
 function showHud(){
   const F=S.firm,dr=F.dayEarn/capital(),set=(id,t,v)=>{const e=$(id);e.textContent=t;e.className=v===undefined?'':cls(v);};
@@ -2025,7 +2023,6 @@ function showUI(){
 const TABS=['feed','daily','people','nums'];
 function setTab(t){tab=t;feedKey='';for(const k of TABS){$('t-'+k).setAttribute('aria-selected',String(k===t));$('p-'+k).hidden=k!==t;}dirty=true;}
 for(const k of TABS)$('t-'+k).onclick=()=>setTab(k);
-$('undo').onclick=()=>{FIRES.length=0;saveFires();const t=simNow();newSim();VIS=false;advance(t);VIS=true;syncAgents(true);setHeight();dirty=true;};
 function setPanel(open){document.body.classList.toggle('closed',!open);$('menu').setAttribute('aria-pressed',String(open));$('menu').textContent=MOB?(open?'Close':'Menu'):(open?'Hide menu':'Show menu');
   if(!MOB){PANEL=open?380:0;PADT=PADB=0;PADL=212;}
   else if(LAND){PANEL=open?Math.min(340,SW*.46)+6:0;PADT=44;PADB=0;PADL=56;}
